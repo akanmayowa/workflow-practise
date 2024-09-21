@@ -1,0 +1,38 @@
+on:
+  push:
+    branches: [ master, feature/**]
+jobs:
+  laravel-test-with-database:
+    runs-on: ubuntu-latest
+    # service container for mysql database image
+
+    services:
+      mysql-service:
+        image: mysql:5.7
+        env:
+          MYSQL_ALLOW_EMPTY_PASSWORD: false
+          MYSQL_ROOT_PASSWORD: ${{ secrets.DB_PASSWORD }}
+          MYSQL_DATABASE: ${{ secrets.DB_NAME }}
+        ports:
+          - 3306/tcp
+        options: --health-cmd="mysqladmin ping" --health-interval=10s --health-timeout=5s --health-retries=3
+    steps:
+      - uses: actions/checkout@v2
+      - name: Laravel Setup
+        run: |
+          cp .env.ci .env
+          composer install -q --no-ansi --no-interaction --no-scripts --no-suggest --no-progress --prefer-dist
+          php artisan key:generate
+          chmod -R 777 storage bootstrap/cache
+      - name: Execute tests (Unit and Feature tests) via PHPUnit
+        env:
+          DB_CONNECTION: mysql
+          DB_DATABASE: learning
+          DB_PORT: 33306
+          DB_USER: root
+          DB_PASSWORD: ${{ secrets.DB_PASSWORD }}
+        run: |
+          php artisan migrate
+          vendor/phpunit/phpunit/phpunit
+
+
