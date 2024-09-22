@@ -9,7 +9,6 @@ use Symfony\Component\HttpFoundation\StreamedResponse;
 
 class ImageController extends Controller
 {
-
     public function upload()
     {
         return view('image-upload');
@@ -23,7 +22,6 @@ class ImageController extends Controller
 //        ]);
 
         if ($request->hasFile('image')) {
-
             $path =  $request->file('image')->store('avatar', 's3');
 
             Image::create([
@@ -33,7 +31,7 @@ class ImageController extends Controller
 
 
             return redirect()->back()->with([
-                'message'=> "Image uploaded successfully",
+                'message' => "Image uploaded successfully",
             ]);
         }
     }
@@ -48,11 +46,10 @@ class ImageController extends Controller
             'svg' => 'image/svg+xml',
             default => 'image/png',
         };
-        return Storage::disk('s3')->response('avatar/'. $image->filename,
+        return Storage::disk('s3')->response(
+            'avatar/' . $image->filename,
             null,
             ['Content-Type' => $mimeType]
         );
     }
-
-
 }
