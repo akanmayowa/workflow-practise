@@ -1,0 +1,19 @@
+includes:
+	- phpstan.neon.dist
+
+parameters:
+    paths:
+        - app
+        - database/factories
+        - database/seeders
+        - routes
+        - tests
+        - resources/views
+        - config
+
+    excludePaths:
+        - public
+        - content
+        - bootstrap
+
+    level: 9

@@ -94,3 +94,13 @@ jobs:
       - name: PHP Code Sniffer
         run: phpcs
 
+      - name: Install PHP-STAN
+        run: composer require phpstan/phpstan nunomaduro/larastan
+
+      - name: Copy PHP-STAN ruleset neon file
+        run: |
+          php -r "file_exists('phpstan.neon') || copy('phpstan.neon', 'phpstan.neon');"
+          php -r "file_exists('phpstan.neon.dist') || copy('phpstan.neon.dist', 'phpstan.neon.dist');"
+
+      - name: PHP-STAN RUN
+        run: vendor/bin/phpstan analyze
