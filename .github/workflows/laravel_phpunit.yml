@@ -63,7 +63,7 @@ jobs:
       - name: Install Npm
         run: |
           npm install
-          npm run dev
+          npm run build
 
       - name: Prepare the application
         run: |
