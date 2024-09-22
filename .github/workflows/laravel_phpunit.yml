@@ -8,7 +8,7 @@ jobs:
 
     services:
       mysql-service:
-        image: mysql:5.7
+        image:  mysql:latest
         env:
           MYSQL_ALLOW_EMPTY_PASSWORD: yes
           MYSQL_DATABASE: ${{ secrets.DB_NAME }}
@@ -38,6 +38,11 @@ jobs:
 
       - name: Clear Config
         run: php artisan config:clear
+
+      - name: Run Migration
+        run: php artisan migrate -v
+        env:
+          DB_PORT: ${{ job.services.mysql.ports['3306'] }}
 
       - name: Execute tests (Unit and Feature tests) via PHPUnit
         env:
