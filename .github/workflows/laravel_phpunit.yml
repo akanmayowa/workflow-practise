@@ -85,6 +85,9 @@ jobs:
           DB_PORT: ${{ job.services.mysql.ports['3306'] }}
           REDIS_PORT: ${{ job.services.redis.ports['6379'] }}
 
+      - name: Install PHPCS by squizlabs
+        run: composer global require "squizlabs/php_codesniffer=*"
+
       - name: PHP Code Sniffer
-        run: phpcs
+        run: vendor/bin/phpcs
 
