@@ -88,6 +88,9 @@ jobs:
       - name: Install PHPCS by squizlabs
         run: composer global require "squizlabs/php_codesniffer=*"
 
+      - name: Copy PHPCS ruleset file
+        run: php -r "file_exists('phpcs.xml') || copy('phpcs.xml', 'phpcs.xml');"
+
       - name: PHP Code Sniffer
         run: phpcs
 
