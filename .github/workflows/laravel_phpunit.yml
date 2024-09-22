@@ -21,7 +21,7 @@ jobs:
           fetch-depth: 1
 
       - name: Prepare The Environment
-        run: cp .env.example .env
+        run: cp .env .env
 
       - name: Setup PHP
         uses: shivammathur/setup-php@v2
