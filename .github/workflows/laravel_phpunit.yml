@@ -10,7 +10,7 @@ jobs:
       mysql-service:
         image: mysql:5.7
         env:
-          MYSQL_ROOT_PASSWORD: ${{ secrets.DB_PASSWORD }}
+          MYSQL_ALLOW_EMPTY_PASSWORD: yes
           MYSQL_DATABASE: ${{ secrets.DB_NAME }}
         ports:
           - 3306/tcp
