@@ -89,5 +89,5 @@ jobs:
         run: composer global require "squizlabs/php_codesniffer=*"
 
       - name: PHP Code Sniffer
-        run: vendor/bin/phpcs
+        run: phpcs
 
